@@ -2,7 +2,7 @@
 
 ## Artemis II-Style Free-Return Trajectory Demo
 
-This MATLAB script simulates a simplified **Earth–Moon free-return mission** inspired by an Artemis II-style trajectory. The spacecraft begins in a circular low Earth parking orbit, completes one Earth orbit, performs a **trans-lunar injection (TLI)** burn, makes a **small trajectory correction**, flies past the **far side of the Moon**, returns toward Earth, and performs **one final burn** to circularize back into Earth orbit. :contentReference[oaicite:0]{index=0}
+This MATLAB script simulates a simplified **Earth–Moon free-return mission** inspired by an Artemis II-style trajectory. The spacecraft begins in a circular low Earth parking orbit, completes one Earth orbit, performs a **trans-lunar injection (TLI)** burn, makes a **small trajectory correction**, flies past the **far side of the Moon**, returns toward Earth, and performs **one final burn** to circularize back into Earth orbit.
 
 ## Features
 
@@ -16,7 +16,7 @@ This MATLAB script simulates a simplified **Earth–Moon free-return mission** i
 - Direct Earth return
 - One-burn Earth-orbit circularization on return
 - Static plots of the trajectory and distance histories
-- Animated GIF export of the mission profile :contentReference[oaicite:1]{index=1} :contentReference[oaicite:2]{index=2}
+- Animated GIF export of the mission profile
 
 ## How It Works
 
@@ -31,7 +31,7 @@ A grid search sweeps over:
 - TLI burn magnitude
 - TLI burn flight-path angle
 
-It evaluates each candidate and keeps the best feasible seed for refinement. :contentReference[oaicite:3]{index=3}
+It evaluates each candidate and keeps the best feasible seed for refinement.
 
 ### 2. Refinement
 
@@ -41,7 +41,7 @@ The best seed is refined using `fminsearch` and a bounded objective function. Th
 - returns near the original Earth orbit radius,
 - approaches Earth inbound,
 - passes on the far side of the Moon,
-- uses a small correction burn. :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+- uses a small correction burn.
 
 ## Mission Sequence
 
@@ -52,7 +52,7 @@ The best seed is refined using `fminsearch` and a bounded objective function. Th
 5. Apply one small correction burn  
 6. Perform lunar flyby  
 7. Return toward Earth  
-8. Circularize into Earth orbit at first inbound crossing of the target radius, or at the first post-flyby local minimum radius if needed. :contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7}
+8. Circularize into Earth orbit at first inbound crossing of the target radius, or at the first post-flyby local minimum radius if needed.
 
 ## Model Assumptions
 
@@ -65,7 +65,7 @@ Assumptions include:
 - Moon on a circular orbit,
 - only Earth and Moon gravity included,
 - impulsive burns,
-- no Sun, no non-spherical gravity, no atmospheric drag, and no 3D effects. :contentReference[oaicite:8]{index=8} :contentReference[oaicite:9]{index=9}
+- no Sun, no non-spherical gravity, no atmospheric drag, and no 3D effects.
 
 ## Inputs / Tunable Parameters
 
@@ -77,7 +77,7 @@ Key parameters near the top of the script include:
 - `p.muM` — Moon gravitational parameter
 - `p.Re` — Earth radius
 - `p.Rm` — Moon radius
-- `p.Dem` — Earth–Moon distance :contentReference[oaicite:10]{index=10}
+- `p.Dem` — Earth–Moon distance
 
 ### Parking orbit
 
@@ -85,20 +85,20 @@ Key parameters near the top of the script include:
 - `p.r0` — parking orbit radius
 - `p.vcirc` — circular speed at parking orbit
 - `p.Torbit` — parking orbit period
-- `p.nParkingOrbits` — number of Earth orbits before TLI :contentReference[oaicite:11]{index=11}
+- `p.nParkingOrbits` — number of Earth orbits before TLI
 
 ### Mission timing
 
 - `p.tfinal` — simulation end time
 - `p.nominalCorrDays` — nominal correction timing
 - `p.nPostCaptureOrbits` — extra post-capture orbits shown
-- `p.tPostCapture` — post-capture coast duration :contentReference[oaicite:12]{index=12}
+- `p.tPostCapture` — post-capture coast duration
 
 ### Targeting goals
 
 - `p.targetFlybyAlt` — desired lunar flyby altitude
 - `p.targetReturnRad` — desired Earth return radius
-- `p.maxCorrDV` — preferred upper scale for correction burn size :contentReference[oaicite:13]{index=13}
+- `p.maxCorrDV` — preferred upper scale for correction burn size
 
 ### GIF controls
 
@@ -107,7 +107,7 @@ Key parameters near the top of the script include:
 - `gifDelay` — frame delay
 - `gifSkip` — frame subsampling
 - `showFullTrail` — show full trajectory or short tail
-- `trailLength` — tail length when not showing full trail :contentReference[oaicite:14]{index=14}
+- `trailLength` — tail length when not showing full trail
 
 ## Outputs
 
@@ -116,7 +116,7 @@ When run, the script produces:
 - console output with optimized trajectory parameters and mission summary,
 - a static Earth-centered trajectory figure,
 - a figure showing distance to Earth and distance to Moon over time,
-- an animated GIF of the mission. :contentReference[oaicite:15]{index=15} :contentReference[oaicite:16]{index=16}
+- an animated GIF of the mission.
 
 Reported summary values include:
 
@@ -129,7 +129,7 @@ Reported summary values include:
 - Earth return radial velocity
 - far-side metric
 - final circularization burn
-- final circularized orbit radius. :contentReference[oaicite:17]{index=17}
+- final circularized orbit radius
 
 ## Main Functions
 
@@ -143,20 +143,20 @@ Propagates the spacecraft through:
 - correction burn,
 - final coast to the end of the free-return arc.
 
-It also computes flyby altitude, return radius, far-side metric, and event indices. :contentReference[oaicite:18]{index=18}
+It also computes flyby altitude, return radius, far-side metric, and event indices.
 
 ### `add_earth_recapture(sol, p)`
 
-Finds a suitable Earth-return point and applies one burn to circularize into Earth orbit, then propagates the final circular coast. :contentReference[oaicite:19]{index=19}
+Finds a suitable Earth-return point and applies one burn to circularize into Earth orbit, then propagates the final circular coast.
 
 ### `objective_from_solution(x, sol, p)`
 
-Builds the optimization cost function based on flyby altitude, Earth return radius, radial return velocity, far-side passage quality, and correction burn size. :contentReference[oaicite:20]{index=20}
+Builds the optimization cost function based on flyby altitude, Earth return radius, radial return velocity, far-side passage quality, and correction burn size.
 
 ### `rhs(t, y, p, moonPhase0)`
 
-Defines the equations of motion under Earth and Moon gravity. :contentReference[oaicite:21]{index=21}
+Defines the equations of motion under Earth and Moon gravity.
 
 ### `moon_position(t, p, moonPhase0)` / `moon_state(t, p, moonPhase0)`
 
-Return the Moon’s position and velocity in the 2D Earth-centered frame. :contentReference[oaicite:22]{index=22}
+Return the Moon’s position and velocity in the 2D Earth-centered frame.
